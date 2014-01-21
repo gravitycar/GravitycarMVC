@@ -1,0 +1,36 @@
+<?xml version="1.0"  encoding="UTF-8" ?>
+
+<project name="GravitycarMVC Local" basedir="../" default="main">
+    <property file="./build.properties" />
+
+    <property name="package"  value="${phing.project.name}" override="true" />
+    <property name="builddir" value="/var/www.8020" override="true" />
+    <property name="srcdir"   value="/home/mike/GravitycarMVC" override="true" />
+
+    <!-- Fileset for all files -->
+    <fileset dir="${srcdir}" id="allfiles">
+        <include name="**" />
+        <exclude name="${builddir}/build"/>
+        <exclude name="build"/>
+        <exclude name=".."/>
+    </fileset>
+
+    <!-- ============================================  -->
+    <!-- (DEFAULT) Target: main                        -->
+    <!-- ============================================  -->
+    <target name="main" description="main target">
+    <echo msg="Creating build..." />
+        <copy todir="${builddir}">
+            <fileset refid="allfiles" />
+        </copy>
+    </target>
+
+    <!-- ============================================  -->
+    <!-- Target: Rebuild                               -->
+    <!-- ============================================  -->
+    <target name="rebuild" description="rebuilds this package">
+    <echo msg="Rebuilding..." />
+        <delete dir="${builddir}" />
+        <phingcall target="main" />
+    </target>
+</project>
