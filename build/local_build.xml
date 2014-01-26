@@ -12,6 +12,7 @@
         <include name="**" />
         <exclude name="${builddir}/build"/>
         <exclude name="build"/>
+        <exclude name="docs"/>
         <exclude name=".."/>
     </fileset>
 
