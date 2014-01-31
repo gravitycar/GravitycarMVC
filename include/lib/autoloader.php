@@ -5,6 +5,8 @@ function gravitonLoader($className)
       "modules/$className/$className.php",
       "include/abstracts/$className.php",
       "include/interfaces/$className.php",
+      "include/exceptions/$className.php",
+      "include/logger/$className.php",
       "MVC/$className.php",
    );
    
