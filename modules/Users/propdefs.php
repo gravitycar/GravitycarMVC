@@ -1,0 +1,93 @@
+<?php
+$propdefs = array(
+    'id' => array(
+        'name' => 'id',
+        'source' => 'db',
+        'datatype' => 'string',
+        'fieldtype' => 'hidden',
+        'defaultvalue' => null,
+        'required' => true,
+        'label' => 'id',
+        'len' => '64',
+        'searchable' => true,
+    ),
+    
+    'user_name' => array(
+        'name' => 'user_name',
+        'source' => 'db',
+        'datatype' => 'string',
+        'fieldtype' => 'text',
+        'defaultvalue' => '',
+        'required' => true,
+        'label' => 'Login',
+        'len' => '64',
+        'searchable' => true,
+        'tool-tip' => 'Your Login Name',
+    ),
+    
+    'first_name' => array(
+        'name' => 'first_name',
+        'source' => 'db',
+        'datatype' => 'string',
+        'fieldtype' => 'text',
+        'defaultvalue' => '',
+        'required' => false,
+        'label' => 'Fist Name',
+        'len' => 64,
+        'searchable' => true,
+        'tool-tip' => 'The user\'s first name',
+    ),
+    
+    'last_name' => array(
+        'name' => 'last_name',
+        'source' => 'db',
+        'datatype' => 'string',
+        'fieldtype' => 'text',
+        'defaultvalue' => '',
+        'required' => false,
+        'label' => 'Last Name',
+        'len' => 64,
+        'searchable' => true,
+        'tool-tip' => 'The user\'s last name',
+    ),
+    
+    'email_address' => array(
+        'name' => 'email_address',
+        'source' => 'db',
+        'datatype' => 'string',
+        'fieldtype' => 'text',
+        'defaultvalue' => '',
+        'required' => false,
+        'label' => 'Email Address',
+        'len' => 256,
+        'searchable' => true,
+        'tool-tip' => 'The user\'s email address',
+    ),
+    
+    'password_hash' => array(
+        'name' => 'password_hash',
+        'source' => 'db',
+        'datatype' => 'string',
+        'fieldtype' => 'password',
+        'defaultvalue' => '********',
+        'required' => true,
+        'label' => 'Password',
+        'len' => 64,
+        'searchable' => false,
+        'tool-tip' => 'The user\'s password',
+    ),
+    
+    'phone_number' => array(
+        'name' => 'phone_number',
+        'source' => 'db',
+        'datatype' => 'string',
+        'fieldtype' => 'text',
+        'defaultvalue' => '',
+        'required' => false,
+        'label' => 'Password',
+        'len' => 18,
+        'searchable' => true,
+        'tool-tip' => 'The user\'s phone number',
+    ),
+);
+?>
