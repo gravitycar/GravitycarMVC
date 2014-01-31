@@ -1,4 +1,5 @@
 <?php
-
-print("hello world it's me!");
+require_once('MVC/Controller.php');
+$controller = new Controller();
+$controller->run();
 ?>
