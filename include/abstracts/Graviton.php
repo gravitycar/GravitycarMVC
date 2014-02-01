@@ -29,6 +29,7 @@ abstract class Graviton
    public function __construct()
    {
       $this->log = GravitonLogger::singleton();
+      $this->loadPropDefs();
    }
    
    
@@ -79,10 +80,41 @@ abstract class Graviton
       if (IsSet($propdefs)) {
          $this->propdefs = $propdefs;
          unset($propdefs);
-         return true;
       } else {
          return false;
       }
+      
+      foreach ($this->prodefs as $prop => $defs) {
+         $this->$prop = $defs['defaultvalue'];
+      }
+      
+      return true;
+   }
+   
+   
+   /**
+    * searchPropDefs()
+    *
+    * Search the property definitions for any property that has an attribute that is
+    * set to a particular value. Returns an array of property names which can be used
+    * as keys in the propdefs array.
+    *
+    * @param string $attribute - a propdef attribute name, i.e. fieldtype.
+    * @param mixed $value - a value for the attribute you are searching for. 
+    * @return array - an array of strings, where each string is the name of a propdef
+    *    where its $attribute is set to $value.
+    */
+   public function searchPropDefs($attribute, $value)
+   {
+      $matches = array();
+      foreach ($this->propdefs as $prop => $defs) {
+         if (IsSet($this->propdefs[$prop])) {
+            if ($this->propdefs[$prop] === $value) {
+               $matches[] = $prop;
+            }
+         }
+      }
+      return $matches;
    }
    
    
