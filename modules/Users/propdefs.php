@@ -8,8 +8,9 @@ $propdefs = array(
         'defaultvalue' => null,
         'required' => true,
         'label' => 'id',
-        'len' => '64',
+        'len' => '16',
         'searchable' => true,
+        'isPrimary' => true,
     ),
     
     'user_name' => array(
@@ -59,7 +60,7 @@ $propdefs = array(
         'defaultvalue' => '',
         'required' => false,
         'label' => 'Email Address',
-        'len' => 256,
+        'len' => 255,
         'searchable' => true,
         'tool-tip' => 'The user\'s email address',
     ),
@@ -84,7 +85,7 @@ $propdefs = array(
         'fieldtype' => 'text',
         'defaultvalue' => '',
         'required' => false,
-        'label' => 'Password',
+        'label' => 'Phone Number',
         'len' => 18,
         'searchable' => true,
         'tool-tip' => 'The user\'s phone number',

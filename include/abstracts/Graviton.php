@@ -8,27 +8,42 @@
  */
 abstract class Graviton
 {
-   /** @type string - the name of the module */
+   /** @var string the name of the module */
    public $name = '';
    
-   /** @type string - the table name for this module */
+   /** @var string the table name for this module */
    public $table = '';
    
-   /** @type array - a list of error messages to display to the user and/or log */
-   public $errors = array();
+   /** @var ErrorManager the error manager to record any errors */
+   public $errMgr = null;
    
-   /** @type array - a list of property definitions for the properties of this class */
+   /** @var array a list of property definitions for the properties of this class */
    public $propdefs = array();
    
-   /** @type string - the name of the template file to use for this module */
+   /** @var string the name of the template file to use for this module */
    public $templateFile = '';
    
-   /** @type GravitonLogger - the loger object to log messages */
+   /** @var GravitonLogger the loger object to log messages */
    public $log = null;
+   
+   /** @var PropdefManager the Property Definition Manager object, for loading/reading propdefs */
+   public $pdm = null;
+   
+   /** @var db the database manager object */
+   public $db = null;
+    
+    /** @var ConfigManager
+    The configuration manager object */
+    public $cfg = null;
+   
    
    public function __construct()
    {
       $this->log = GravitonLogger::singleton();
+      $this->errMgr = ErrorManager::singleton();
+      $this->pdm = PropdefManager::singleton();
+      $this->db = DBManager::singleton();
+      $this->cfg = ConfigManager::singleton();
       $this->loadPropDefs();
    }
    
@@ -68,26 +83,14 @@ abstract class Graviton
    public function loadPropDefs()
    {
       $className = $this->getClassName();
-      $propdefsFilePath = "modules/$className/propdefs.php";
-      try {
-         require_once($propdefsFilePath);
-      } catch (Exception $e) {
-         print($e->getMessage());
-         print($e->getTraceAsString());
-         return false;
+      $this->propdefs = $this->pdm->loadPropDefs($className);
+      foreach ($this->propdefs as $prop => $defs) {
+         if ($defs['datatype'] == 'relationship') {
+            $this->$prop = array();
+         } else {
+            $this->$prop = $defs['defaultvalue'];
+         }
       }
-      
-      if (IsSet($propdefs)) {
-         $this->propdefs = $propdefs;
-         unset($propdefs);
-      } else {
-         return false;
-      }
-      
-      foreach ($this->prodefs as $prop => $defs) {
-         $this->$prop = $defs['defaultvalue'];
-      }
-      
       return true;
    }
    
@@ -104,17 +107,12 @@ abstract class Graviton
     * @return array - an array of strings, where each string is the name of a propdef
     *    where its $attribute is set to $value.
     */
-   public function searchPropDefs($attribute, $value)
+   public function searchPropDefs($attribute, $value, $moduleName = '')
    {
-      $matches = array();
-      foreach ($this->propdefs as $prop => $defs) {
-         if (IsSet($this->propdefs[$prop])) {
-            if ($this->propdefs[$prop] === $value) {
-               $matches[] = $prop;
-            }
-         }
+      if (empty($moduleName)) {
+         $moduleName = $this->getClassName();
       }
-      return $matches;
+      return $this->pdm->searchPropDefs($moduleName, $attribute, $value);
    }
    
    
@@ -124,11 +122,70 @@ abstract class Graviton
     * Returns the hash of property definitions for a given property.
     *
     * @param string $propName - the name of the property you want definitions for.
-    * @return hash - the hash of name/value pairs for the named property.
+    * @param string $moduleName - the name of the module the property belongs to. Defaults
+    *  to this module name.
+    * @return hash - the hash of name/value pairs for the named property. Empty array
+    *  if not found.
     */
-   public function getPropDef($propName)
+   public function getPropDef($propName, $moduleName = '')
    {
-      return IsSet($this->propdefs[$propName]) ? $this->propdefs[$propName] : null;
+      if (empty($moduleName)) {
+         $moduleName = $this->getClassName();
+      }
+      return $this->pdm->getPropDef($moduleName, $propName);
+   }
+   
+   
+   /**
+    * toJSON()
+    *
+    * Returns a JSON string that represents this module. It will loop through the
+    * propdefs for the module, collect the values of each property, and add them
+    * to a temporary object, which is then encoded as JSON. The resulting string
+    * is then returned.
+    *
+    * @return string - a JSON encoded string of an object which represents this 
+    *  module.
+    */
+   public function toJSON()
+   {
+      $propValuesObject = (object) $this->toHash();
+      return json_encode($propValuesObject);
+   }
+   
+   
+   /**
+    * toHash()
+    *
+    * Loops through all the properties listed in the propdefs and returns an
+    * associative array of propdefname => someValue. Nested or related objects
+    * must support a toHash() method to be included in the results.
+    *
+    * @return hash - an associative array of propname = propvalue based on the
+    *  propdefs for this module.
+    */
+   public function toHash()
+   {
+      $propValuesHash = array();
+      foreach ($this->propdefs as $propName => $propDefs) {
+         if ($propDefs['datatype'] == 'relationship') {
+            foreach ($this->$propName as $graviton) {
+               $propValuesHash[$propName] = array();
+               if (is_a($graviton, 'Graviton')) {
+                  $propValuesHash[$propName][] = $graviton->toHash();
+               } else {
+                  $className = $this->getClassName();
+                  $gravitonClass = get_class($graviton);
+                  $msg = "In toHash(), $className->$propName is a relationship type, but is not a Graviton - it is a $gravitonClass";
+                  $this->errMgr->error($msg);
+               }
+            }
+         } else {
+            $propValuesHash[$propName] = $this->$propName;
+         }
+      }
+      
+      return $propValuesHash;
    }
 }
 ?>
