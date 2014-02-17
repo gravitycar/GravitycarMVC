@@ -13,6 +13,7 @@ class Module_Action_View_Map
    public function __construct()
    {
       $this->addModuleToMap("Home", "display", 'HomePage');
+      $this->addModuleToMap("Users", "display", 'list');
       $this->addModuleToMap("Test", "detail", '');
    }
    

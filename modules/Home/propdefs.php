@@ -1,0 +1,4 @@
+<?php
+$propdefs = array(
+);
+?>

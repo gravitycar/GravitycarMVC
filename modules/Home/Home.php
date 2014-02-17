@@ -1,6 +1,7 @@
 <?php
 class Home extends Graviton
 {
+   public $name = "Home";
    
    public function execute()
    {

@@ -1,5 +1,6 @@
 <?php
 require_once('include/lib/autoloader.php');
+require_once('include/lib/fatalErrorHandler.php');
 require_once('MVC/Module_Action_View_Map.php');
 class Controller
 {
@@ -42,6 +43,7 @@ class Controller
       }
       
       if (!$this->map->validate($moduleName)) {
+         print("$moduleName is not a valid module. Using {$this->defaultModuleName} instead.");
          $moduleName = $this->defaultModuleName;
       }
       
@@ -110,7 +112,7 @@ class Controller
     */
    public static function reportError($errorMessage)
    {
-      self::$errors[] = $errorMessage;
+      //self::$errors[] = $errorMessage;
    }
 }
 

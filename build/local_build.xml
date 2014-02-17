@@ -22,19 +22,55 @@
     <!-- ============================================  -->
     <target name="main" description="main target">
     
-    <echo msg="Creating build..." />
-        <copy todir="${builddir}">
-            <fileset refid="allfiles" />
-        </copy>
-    <echo msg="Updating Docs" />    
-    <phingcall target="phpdoc" />    
+       <phingcall target="update"/>    
+       <phingcall target="phpdoc" />    
     </target>
-
+    
+    
+    
+   <!-- ============================================  -->
+   <!-- (DEFAULT) Target: main                        -->
+   <!-- ============================================  -->
+   <target name="phpmd">
+      <mkdir dir="${phpmd.output.xml.dir}"/>
+      <mkdir dir="${phpmd.output.html.dir}"/>
+      <exec
+         command="${phpmd.exec} ${phpmd.args}"
+         dir="${project.basedir}"
+         passthru="true"
+      />
+   <xslt
+   file="${phpmd.output.xml.file}"
+   tofile="${phpmd.output.html.file}"
+   style="${phpmd.style}"
+   />
+   </target>
+    
+    <!-- ============================================  -->
+    <!-- Target: update                                -->
+    <!-- ============================================  -->
+    <target name="update" description="only copy latest change to dev environment.">
+      <echo msg="Updating Files..."/>
+      <copy todir="${builddir}">
+         <fileset refid="allfiles" />
+      </copy>
+    </target>
+    
+    
+    <!-- ============================================  -->
+    <!-- Target: update config                         -->
+    <!-- ============================================  -->
+    <target name="update_config" description="only copy latest change to dev environment.">
+      <echo msg="Updating config file..."/>
+      <copy file="${srcdir}/../gravitycar.config.php" tofile="${builddir}/../gravitycar.config.php" overwrite="true"/>
+    </target>
+    
     
     <!-- ============================================  -->
     <!-- Target: document                              -->
     <!-- ============================================  -->
     <target name="phpdoc">
+       <echo msg="Updating Docs" />
        <mkdir dir="${docsdir}"/>
        <exec
          command="phpdoc -d ${srcdir} -t ${docsdir}"
@@ -42,6 +78,7 @@
          passthru="true"
        />
     </target>
+    
     
     <!-- ============================================  -->
     <!-- Target: Rebuild                               -->

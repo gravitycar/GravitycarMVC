@@ -5,10 +5,10 @@
  * A class for logging messages for the Gravitycar Web site. Logs any string
  * the gravitycar.log file.
  */
-class GravitonLogger
+class GravitonLogger extends Singleton
 {
    /** @var string - Path to the log file. */
-   private $logFilePath = 'gravitycar.log';
+   private $logFilePath = '/var/www.8020/gravitycar.log';
    
    /** @var int - max size of log file in bytes. Log file should be rolled after getting this big. */
    private $maxLogFileSize = '100000'; // @ 0.1 MB
@@ -25,6 +25,8 @@ class GravitonLogger
    /** @var int - the current logging level - higher values means more logging */
    private $loggingLevel = 1;
    
+   /** @var resource the file handle resource*/
+   private $fh = null;
    
    /**
     * __construct()
@@ -35,23 +37,32 @@ class GravitonLogger
     * @param string $prefix - some string to prepend to all log entries. Will be added to 
     *    other strings.
     */
-   private function __construct($prefix = '')
-   {
-      $prefixes = array();
-      if (!empty($prefix)) {
-         $prefixes[] = $prefix;
-      }
-      
-      if (IsSet($_SESSION['user_id'])) {
-         $prefixes[] = "{$_SESSION['user_id']}";
-      }
-      
-      foreach ($_GET as $key => $value) {
-         $prefixes[] = "$key=$value";
-      }
-      
-      $this->prefix = implode('|', $prefixes) . ': ';
-   }
+    protected function __construct($prefix = '')
+    {
+        //parent::__construct();
+        $prefixes = array();
+        if (!empty($prefix)) {
+            $prefixes[] = $prefix;
+        }
+        
+        if (IsSet($_SESSION['user_id'])) {
+            $prefixes[] = "{$_SESSION['user_id']}";
+        }
+        
+        foreach ($_GET as $key => $value) {
+            $prefixes[] = "$key=$value";
+        }
+        
+        $this->prefix = implode('|', $prefixes) . ': ';
+        
+        if (!is_a($this, 'ErrorManager')) {
+            $this->errMgr = ErrorManager::singleton();
+        }
+        
+        if (!is_a($this, 'GravitonLogger')) {
+            $this->log = GravitonLogger::singleton();
+        }
+    }
    
    
    /**
@@ -96,7 +107,7 @@ class GravitonLogger
     *    message to make sure its written.
     * @return void
     */
-    public function error($msg, $force)
+    public function error($msg, $force=false)
     {
        $this->log($msg, 0, $force);
     }
@@ -112,7 +123,7 @@ class GravitonLogger
     *    message to make sure its written.
     * @return void
     */
-    public function debug($msg, $force)
+    public function debug($msg, $force=false)
     {
        $this->log($msg, 1, $force);
     }
@@ -183,18 +194,22 @@ class GravitonLogger
     */
    protected function openLogFile()
    {
-      try {
-         $fh = fopen($this->logFilePath, "a+");
-      } catch (Exception $e) {
-         print($e->getMessage());
-         return false;
+      if ($this->fh === null) {
+         try {
+            $this->fh = fopen($this->logFilePath, "w+");
+         } catch (Exception $e) {
+            print($e->getMessage());
+            return false;
+         }
+         
+      }
+         
+      if (!$this->fh) {
+         $cwd = getcwd();
+         throw new Exception("GravitonLogger could not open $cwd{$this->logFilePath}.");
       }
       
-      if (!$fh) {
-         throw new Exception("GravitonLogger could not open {$this->logFilePath}.");
-      }
-      
-      return $fh;
+      return $this->fh;
    }
    
    
@@ -212,19 +227,19 @@ class GravitonLogger
    protected function writeLogEntry($msg)
    {
       try {
-         $fh = $this->openLogFile();
+         $this->openLogFile();
       } catch (Exception $e) {
          print($e->getMessage());
       }
       
       if (is_array($msg)) {
          foreach ($msg as $separateMessage) {
-            $this->writeLogEntry($msg);
+            $this->writeLogEntry($separateMessage);
          }
       } else {
-         fwrite($fh, $msg . "\n");
+         fwrite($this->fh, $msg . "\n");
       }
-      $this->closeLogFile($fh);
+      $this->closeLogFile();
    }
    
    
@@ -233,12 +248,11 @@ class GravitonLogger
     *
     * Closes the log file.
     *
-    * @param resource $fh - a file handle.
     * @return void
     */
-   protected function closeLogFile($fh)
+   protected function closeLogFile()
    {
-      fclose($fh);
+      fclose($this->fh);
    }
    
    
