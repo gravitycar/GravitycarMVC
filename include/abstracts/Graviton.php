@@ -88,7 +88,7 @@ abstract class Graviton
          if ($defs['datatype'] == 'relationship') {
             $this->$prop = array();
          } else {
-            $this->$prop = $defs['defaultvalue'];
+            $this->$prop = IsSet($defs['defaultvalue']) ? $defs['defaultvalue'] : null;
          }
       }
       return true;
@@ -186,6 +186,28 @@ abstract class Graviton
       }
       
       return $propValuesHash;
+   }
+   
+   
+   /**
+    * populateFromHash()
+    *
+    * Propulates the object based on the contents of a hash or associative array.
+    * This could be a database resultset row, or a hash assmebled some other way.
+    * Will loop through the module's propdefs and search the passed in hash for
+    * each property name, and if it finds the name in the hash it assignes this
+    * objects property name to the value from the hash.
+    *
+    * @param array $hash - an associative array of name/value pairs.
+    * @return void.
+    */
+   public function populateFromHash($hash)
+   {
+       foreach ($this->propdefs as $propName => $propDefs) {
+           if (IsSet($hash[$propName])) {
+               $this->$propName = $hash[$propName];
+           }
+       }
    }
 }
 ?>

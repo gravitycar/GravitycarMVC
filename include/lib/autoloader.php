@@ -13,6 +13,7 @@ function gravitonLoader($className)
       "include/interfaces/$className.php",
       "include/exceptions/$className.php",
       "include/managers/$className.php",
+      "MVC/assemblers/$className.php",
       "MVC/$className.php",
    );
    

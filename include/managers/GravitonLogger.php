@@ -125,6 +125,7 @@ class GravitonLogger extends Singleton
     */
     public function debug($msg, $force=false)
     {
+        print("trying to write '$msg'");
        $this->log($msg, 1, $force);
     }
    
@@ -163,7 +164,7 @@ class GravitonLogger extends Singleton
     *
     * @return void
     */
-   protected function writeOutLogEntries()
+   public function writeOutLogEntries()
    {
       $this->writeLogEntry(implode('', $this->logEntries));
    }
@@ -196,7 +197,7 @@ class GravitonLogger extends Singleton
    {
       if ($this->fh === null) {
          try {
-            $this->fh = fopen($this->logFilePath, "w+");
+            $this->fh = fopen($this->logFilePath, "a+");
          } catch (Exception $e) {
             print($e->getMessage());
             return false;
