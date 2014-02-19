@@ -70,7 +70,7 @@ $propdefs = array(
         'source' => 'db',
         'datatype' => 'string',
         'fieldtype' => 'password',
-        'defaultvalue' => '********',
+        'defaultvalue' => '',
         'required' => true,
         'label' => 'Password',
         'len' => 64,
@@ -89,6 +89,20 @@ $propdefs = array(
         'len' => 18,
         'searchable' => true,
         'tool-tip' => 'The user\'s phone number',
+    ),
+    
+    'user_type' => array(
+        'name' => 'user_type',
+        'source' => 'db',
+        'datatype' => 'string',
+        'fieldtype' => 'select',
+        'defaultvalue' => 'regular',
+        'required' => true,
+        'label' => 'User Type',
+        'len' => 64,
+        'searchable' => false,
+        'tool-tip' => 'Type of user.',
+        'options' => array('regular' => 'Regular User', 'admin' => 'Administrative User', 'guest' => 'Guest User'),
     ),
 );
 ?>

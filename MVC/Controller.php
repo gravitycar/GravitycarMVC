@@ -5,11 +5,25 @@ require_once('MVC/Module_Action_View_Map.php');
 class Controller
 {
    public $defaultModuleName = "Home";
-   public $errors = array();
+   
+   /** @var GravitonLogger 
+   the loger object to log messages */
+   public $log = null;
+   
+   /** @var ErrorManager 
+   the error manager to record any errors */
+   public $errMgr = null;
+   
+    /** @var ConfigManager
+    The configuration manager object */
+    public $cfg = null;
    
    public function __construct()
    {
       $this->map = new Module_Action_View_Map();
+      $this->cfg = ConfigManager::singleton();
+      $this->log = GravitonLogger::singleton();
+      $this->errMgr = ErrorManager::singleton();
    }
    
    
@@ -17,6 +31,9 @@ class Controller
    {
       $module = $this->loadModule($this->getModuleName());
       $module->execute();
+      $view = new GravitonView($module);
+      print($view->generateHTML());
+      $this->log->writeOutLogEntries();
    }
    
    
@@ -112,7 +129,7 @@ class Controller
     */
    public static function reportError($errorMessage)
    {
-      //self::$errors[] = $errorMessage;
+       $this->log->error($errorMessage);
    }
 }
 

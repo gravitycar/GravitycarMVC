@@ -117,5 +117,11 @@ class PropdefManager extends Singleton
        $primaryPropertyList = $this->searchPropDefs($moduleName, 'isPrimary', true);
        return $this->getPropDef($moduleName, $primaryPropertyList[0]);
    }
+   
+   
+   public function toJSON($moduleName)
+   {
+       return json_encode($this->propdefMap[$moduleName]);
+   }
 }
 ?>
