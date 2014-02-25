@@ -14,6 +14,7 @@ class Users extends Graviton
           'user_name' => 'mike@gravitycar.com',
           'password_hash' => crypt('bageldog'),
           'phone_number' => '408-264-4044',
+          'user_type' => 'guest',
         );
         $this->populateFromHash($data);
         /*
