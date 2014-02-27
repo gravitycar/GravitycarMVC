@@ -18,6 +18,10 @@ class GravitonView
     The configuration manager object */
     public $cfg = null;
     
+    /** @var TagFactory 
+    Object for generating markup */
+    public $tf = null;
+    
     /** @var Graviton
     The module we're using to get data to base our view on. */
     protected $module = null;
@@ -36,6 +40,7 @@ class GravitonView
         $this->cfg = ConfigManager::singleton();
         $this->log = GravitonLogger::singleton();
         $this->errMgr = ErrorManager::singleton();
+        $this->tf = new TemplateFactory($module);
     }
     
     
@@ -46,15 +51,18 @@ class GravitonView
         ob_start();
         // load the header file.
         $this->loadTemplateFile($this->headerFilePath);
-        $wa = new WidgetAssembler();
+        $form = $this->tf->twoColumnForm($this->module);
         
         // get the html produced by the module.
         $script = "
         <script id=\"detail_template\" type=\"text/x-handlebars-template\">";
+        $script .= $form->renderTag();
+        /*
         foreach ($this->module->propdefs as $propName => $defs) {
             $field = $wa->getWidget($this->module->name, $defs, '');
             $script .= "{$defs['label']}: $field</br>";
         }
+        */
         $script .= "</script>";
         
         $script .= "
