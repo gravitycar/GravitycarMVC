@@ -1,0 +1,26 @@
+body
+{
+    font-family: verdana, helvetica, sans-serif;
+    font-size: 11px;
+    color: black;
+    background-color: white;
+}
+
+.formTable
+{
+    border: 2px solid black;
+    font-size: 11px;
+}
+
+.formTable td.formLabel 
+{
+    text-align: right;
+    font-weight: bold;
+}
+
+.buttonContainer
+{
+    float: left;
+    text-align: center;
+    width: 32%;
+}

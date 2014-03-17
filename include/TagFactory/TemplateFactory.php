@@ -16,7 +16,20 @@ class TemplateFactory
         $this->tf = new TagFactory();
     }
     
-    public function twoColumnForm($graviton)
+    
+    public function twoColumnDetail(Graviton $graviton)
+    {
+        return $this->twoColumnLayout($graviton, false);
+    }
+    
+    
+    public function twoColumnForm(Graviton $graviton)
+    {
+        return $this->twoColumnLayout($graviton, true);
+    }
+    
+    
+    public function twoColumnLayout($graviton, $editView = false)
     {
         $formAttributes = array(
                                 'method' => 'POST', 
@@ -36,16 +49,22 @@ class TemplateFactory
                 $form->addChildren($field);
             } else {
                 $tdLabel = $this->tf->td(array('class' => 'formLabel'), $propdef['label'] . ':');
-                $field = $this->tf->getInputField($propdef);
-                $errorDiv = $this->tf->div(array('class' => 'fieldErrorMessage', 'id' => $field->getAttribute('id') . 'errorMsg'));
+                if ($editView) {
+                    $field = $this->tf->getInputField($propdef);
+                    $errorDiv = $this->tf->div(array('class' => 'fieldErrorMessage', 'id' => $field->getAttribute('id') . 'errorMsg'));
+                } else {
+                    $field = '{{' . $propName . '}}';
+                }
                 $tdField = $this->tf->td(array('class' => 'formField'), array($field, $errorDiv));
                 $tr = $this->tf->tr(array('vAlign' => 'top'), array($tdLabel, $tdField));
                 $table->addChildren($tr);
             } 
         }
-        
         $buttons = $this->getStandardFormButtons();
-        $form->addChildren(array($table, $buttons));
+        $buttonsRow = $this->tf->tr();
+        $buttonsRow->addChildren($this->tf->td(array('colSpan' => '2'), $buttons));
+        $table->addChildren($buttonsRow);
+        $form->addChildren($table);
         return $form;
     }
     
