@@ -7,6 +7,13 @@ class TemplateFactory
     public $tf = null;
     
     
+    /**
+     * __construct()
+     *
+     * Instantiates this class.
+     *
+     * @param Graviton $module - the module you want to manufacture templates for.
+     */
     public function __construct(Graviton $module)
     {
         $this->cfg = ConfigManager::singleton();
@@ -16,6 +23,18 @@ class TemplateFactory
         $this->tf = new TagFactory();
     }
     
+    
+    /**
+     * twoColumnForm()
+     *
+     * Returns a form tag with a nested table, which in turn lays out the form input
+     * fields and includes a div with the standard form buttons (save, cancel, reset).
+     * The form fields are based on the prodefs of the passed in Graviton. Tag Factory
+     * knows how to render each field in propdefs based on each field's type attribute.
+     *
+     * @param Graviton $module - the module you want to manufacture templates for.
+     * @return Tag - a Tag object with a name of 'form'.
+     */
     public function twoColumnForm($graviton)
     {
         $formAttributes = array(
@@ -50,6 +69,14 @@ class TemplateFactory
     }
     
     
+    /**
+     * getStandardFormButtons()
+     *
+     * Returns a div that contains the standard buttons for a form: Save, Cancel, and
+     * Reset. 
+     *
+     * @return Tag - a tag of type 'div' with nested buttons.
+     */
     public function getStandardFormButtons()
     {
         $div = $this->tf->div(array('class' => 'formButtonContainer'));
