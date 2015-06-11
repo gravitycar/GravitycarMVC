@@ -60,7 +60,7 @@
     <!-- ============================================  -->
     <!-- Target: update config                         -->
     <!-- ============================================  -->
-    <target name="update_config" description="only copy latest change to dev environment.">
+    <target name="update_config" description="only update config file.">
       <echo msg="Updating config file..."/>
       <copy file="${srcdir}/../gravitycar.config.php" tofile="${builddir}/../gravitycar.config.php" overwrite="true"/>
     </target>

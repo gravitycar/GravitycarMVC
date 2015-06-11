@@ -44,6 +44,22 @@ class GravitonView
     }
     
     
+    /**
+     * render()
+     * 
+     * Renders whatever this module's view is supposed to be.
+     * @param string $action
+     */
+    public function render($action)
+    {
+    	if ($action == 'save') {
+    		header("Location: index.php?module={$this->module->name}&action=detail&id={$this->module->id}");
+    	} else {
+    		print($this->generateHTML());
+    	}
+    }
+    
+    
     public function generateHTML()
     {
         $html = '';

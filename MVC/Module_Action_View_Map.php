@@ -14,7 +14,10 @@ class Module_Action_View_Map
    {
       $this->addModuleToMap("Home", "display", 'HomePage');
       $this->addModuleToMap("Users", "display", 'list');
-      $this->addModuleToMap("Test", "detail", '');
+      $this->addModuleToMap("Users", "save", "detail");
+      $this->addModuleToMap("Users", "update", "detail");
+      $this->addModuleToMap("Users", "create", "detail");
+      $this->addModuleToMap("Users", "detail", "detail");
    }
    
    /**
@@ -32,8 +35,22 @@ class Module_Action_View_Map
       $this->map[$module][$action] = $view;
    }
    
+   
    /**
-    * validate()
+    * listModules()
+    *
+    * Returns a list of all of the names of modules registered in our map.
+    *
+    * @return array - an array of module names.
+    */
+   public function listModules()
+   {
+       return array_keys($this->map);
+   }
+   
+   
+   /**
+    * validateModule()
     *
     * Validates that the passed in module is allowed. Which modules are allowed
     * is specified in the constructor to this class.
@@ -43,9 +60,30 @@ class Module_Action_View_Map
     *    to perform.
     * @return bool - true if the module supports the action, false otherwise.
     */
-   public function validate($module)
+   public function validateModule($module)
    {
       return IsSet($this->map[$module]);
+   }
+   
+   
+   /**
+    * validateAction()
+    * Checks to see if the action specified is allowed for a given module.
+    * 
+    * @param string $module - the module we want to find in the mapping.
+    * @param string $action - the action to check for the module.
+    * @return bool - true if the module supports the action, false otherwise.
+    */
+   public function validateAction($module, $action)
+   {
+   		if (!$this->validateModule($module)) {
+   			return false;
+   		}
+   		
+   		if (!IsSet($this->map[$module][$action])) {
+   			return false;
+   		}
+   		return true;
    }
 }
 ?>

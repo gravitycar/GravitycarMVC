@@ -23,7 +23,7 @@ class GravitonLogger extends Singleton
    private $levels = array(0 => 'error', 1 => 'debug');
    
    /** @var int - the current logging level - higher values means more logging */
-   private $loggingLevel = 1;
+   private $loggingLevel = 2;
    
    /** @var resource the file handle resource*/
    private $fh = null;
@@ -125,7 +125,7 @@ class GravitonLogger extends Singleton
     */
     public function debug($msg, $force=false)
     {
-        print("trying to write '$msg'");
+       // print("trying to write '$msg'");
        $this->log($msg, 1, $force);
     }
    
@@ -195,7 +195,7 @@ class GravitonLogger extends Singleton
     */
    protected function openLogFile()
    {
-      if ($this->fh === null) {
+      if ($this->fh === null || !is_resource($this->fh)) {
          try {
             $this->fh = fopen($this->logFilePath, "a+");
          } catch (Exception $e) {

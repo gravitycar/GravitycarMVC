@@ -20,7 +20,7 @@ class TemplateFactory
         $this->log = GravitonLogger::singleton();
         $this->errMgr = ErrorManager::singleton();
         $this->module = $module;
-        $this->tf = new TagFactory();
+        $this->tf = new TagFactory($module->name);
     }
     
     
@@ -51,12 +51,13 @@ class TemplateFactory
     {
         $formAttributes = array(
                                 'method' => 'POST', 
-                                'action' => "index.php?module={$this->module->name}&action=save",
+                                'action' => "index.php",
                                 'name'   => "Edit{$this->module->name}",
                                 'id'     => "Edit{$this->module->name}",
                                 );
         $form = $this->tf->form($formAttributes);
-        
+        $form->addChildren($this->tf->getTag('input', array('type' =>'hidden', 'name' => 'module', 'value' => $this->module->name)));
+        $form->addChildren($this->tf->getTag('input', array('type' =>'hidden', 'name' => 'action', 'value' => 'save')));
         $tableAttributes = array('id' => "Edit{$this->module->name}" . '_table', 'class' => 'formTable');
         $table = $this->tf->table($tableAttributes);
         
@@ -98,9 +99,9 @@ class TemplateFactory
     public function getStandardFormButtons()
     {
         $div = $this->tf->div(array('class' => 'formButtonContainer'));
-        $saveButton = $this->tf->input(array('type' => 'submit', 'value'=>'Save', 'id'=>"{$this->moduleName}SaveButton", 'class' => 'formButton'));
-        $resetButton = $this->tf->button(array('type' => 'reset', 'value'=>'Clear', 'id'=>"{$this->moduleName}ResetButton", 'class' => 'formButton'), 'Reset');
-        $cancelButton = $this->tf->input(array('type' => 'button', 'value'=>'Cancel', 'id'=>"{$this->moduleName}CancelButton", 'class' => 'formButton'));
+        $saveButton = $this->tf->input(array('type' => 'submit', 'value'=>'Save', 'id'=>"{$this->module->name}SaveButton", 'class' => 'formButton'));
+        $resetButton = $this->tf->button(array('type' => 'reset', 'value'=>'Clear', 'id'=>"{$this->module->name}ResetButton", 'class' => 'formButton'), 'Reset');
+        $cancelButton = $this->tf->input(array('type' => 'button', 'value'=>'Cancel', 'id'=>"{$this->module->name}CancelButton", 'class' => 'formButton'));
         $divSaveButton = $this->tf->div(array('class'=>'buttonContainer', 'id'=>'saveButtonContainer'), $saveButton);
         $divCancelButton = $this->tf->div(array('class'=>'buttonContainer', 'id'=>'cancelButtonContainer'), $cancelButton);
         $divResetButton = $this->tf->div(array('class'=>'buttonContainer', 'id'=>'saveResetContainer'), $resetButton);

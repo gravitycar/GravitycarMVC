@@ -42,8 +42,8 @@ class PropdefManager extends Singleton
             $this->propdefMap[$moduleName] = $propdefs;
             unset($propdefs);
         } else {
-            $this->errMgr->error("No propdefs for {$this->name}");
-            $propdefs =  array();
+            $this->errMgr->error("No propdefs for {$moduleName}");
+            $this->propdefMap[$moduleName] = array();
         }
         
         return $this->propdefMap[$moduleName];
@@ -68,6 +68,25 @@ class PropdefManager extends Singleton
             $propdefs = $this->propdefMap[$moduleName][$propName];
         }
         return $propdefs;
+    }
+    
+    
+    /**
+     * setPropDefAttribute()
+     * 
+     * Sets the value of an attribute in propdefs to the passed in value.
+     * 
+     * @param string $moduleName - name of the module you want to set a definition for.
+     * @param string $propName - name of the property you want to set an attribute's
+     * 	value for.
+     * @param string $attributeName - the attribute you want to set a value for.
+     * @param mixed $value - the value to set the attribute to.
+     */
+    public function setPropDefAttribute($moduleName, $propName, $attributeName, $value)
+    {
+    	if (IsSet($this->propdefMap[$moduleName])) {
+    		$this->propdefMap[$moduleName][$propName][$attributeName] = $value;
+    	}
     }
     
     
