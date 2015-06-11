@@ -29,10 +29,18 @@ class Controller
    
    public function run()
    {
-      $module = $this->loadModule($this->getModuleName());
-      $module->execute();
+   	  $moduleName = $this->getModuleName();
+   	  $action = $this->getAction();
+   	  $module = $this->loadModule($moduleName);
+      
+      try {
+      	$module->execute($action);
+      } catch (Exception $e) {
+      	$this->errMgr->error($e->getMessage());
+      }
+      
       $view = new GravitonView($module);
-      print($view->generateHTML());
+      $view->render($action);
       $this->log->writeOutLogEntries();
    }
    
@@ -59,11 +67,6 @@ class Controller
          $moduleName = $_REQUEST['module'];
       }
       
-      if (!$this->map->validate($moduleName)) {
-         print("$moduleName is not a valid module. Using {$this->defaultModuleName} instead.");
-         $moduleName = $this->defaultModuleName;
-      }
-      
       return $moduleName;
    }
    
@@ -87,7 +90,7 @@ class Controller
          return $overrideAction;
       }
       
-      $action = '';
+      $action = 'list';
       if (IsSet($_REQUEST['action'])) {
          $action = $_REQUEST['action'];
       }

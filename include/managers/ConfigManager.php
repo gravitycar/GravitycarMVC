@@ -26,8 +26,10 @@ class ConfigManager extends Singleton
      */
     public function loadConfig()
     {
+        global $gravitycarConfig;
+        
         if (!file_exists($this->configFilePath)) {
-            $this->errMgr->error("The configuration file cannot be found!");
+            $this->errMgr->error("The configuration file cannot be found at '{$this->configFilePath}'");
             $this->log->error("Could not find the configuration file at {$this->configFilePath}");
             return false;
         }
@@ -104,6 +106,20 @@ class ConfigManager extends Singleton
     public function equals($configPath, $testValue)
     {
         return ($this->get($configPath) == $testValue);
+    }
+    
+    
+    /**
+     * setConfigFilePath()
+     *
+     * Changes the config file path. You may need to reload the config after
+     * calling this function.
+     *
+     * @param string $path - the path to the config file you want to point to.
+     */
+    public function setConfigFilePath($path)
+    {
+        $this->configFilePath = $path;
     }
 }
 ?>

@@ -8,10 +8,10 @@
  * particular implementation.
  *
  */
-require_once('../include/abstracts/Singleton.php');
-require_once('../include/managers/ConfigManager.php');
-require_once('../include/managers/GravitonLogger.php');
-require_once('../include/managers/ErrorManager.php');
+//require_once('../include/abstracts/Singleton.php');
+//require_once('../include/managers/ConfigManager.php');
+//require_once('../include/managers/GravitonLogger.php');
+//require_once('../include/managers/ErrorManager.php');
 class BuildMaster
 {
     public $runTimeOptions = array();
@@ -57,7 +57,7 @@ class BuildMaster
             $this->errMgr->error("$builderClassName is not defined in '$path'");
         }
         
-        $builder = new $builderClassName();
+        $builder = new $builderClassName($this->runTimeOptions);
         return $builder;
     }
     
@@ -73,11 +73,15 @@ class BuildMaster
      *  be empty if the builder requires no options.
      * @return mixed - the result of the run() method or false on failure.
      */
-    public function runBuilder($builderClassName, $runTimeOptions)
+    public function runBuilder($builderClassName, $runTimeOptions = false)
     {
+        if ($runTimeOptions) {
+            $this->runTimeOptions = $runTimeOptions;
+        }
+        
         $builder = $this->instantiate($builderClassName);
         if (!is_null($builder) && is_a($builder, $builderClassName)) {
-            return $builder->run($runTimeOptions);
+            return $builder->run($this->runTimeOptions);
         } else {
             $this->errMgr->error("Could not run class '$builderClassName' - instantiation failed.");
             return false;

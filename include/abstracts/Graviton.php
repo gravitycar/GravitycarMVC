@@ -32,9 +32,9 @@ abstract class Graviton
    /** @var db the database manager object */
    public $db = null;
     
-    /** @var ConfigManager
-    The configuration manager object */
-    public $cfg = null;
+   /** @var ConfigManager
+   The configuration manager object */
+   public $cfg = null;
    
    
    public function __construct()
@@ -48,9 +48,33 @@ abstract class Graviton
    }
    
    
-   public function execute()
+   /**
+    * execute()
+    * 
+    * Takes an action as its argument, and if that action is defined as a function
+    * for this class, it executes that method. If it doesn't, you get an error.
+    * 
+    * @param string $action - the name of a function of this class you want to call.
+    * @return mixed - whatever $action returns, or false if $action isn't defined.
+    */
+   public function execute($action)
    {
-      print("I'm from Graviton::execute()");
+   		$this->errMgr->error("executing $action");
+   		if (!method_exists($this, $action)) {
+   			$this->errMgr->error("$action is NOT a method.");
+   			$errorMsg = "$action is not defined for module '{$this->name}'";
+   			$this->errMgr->error($errorMsg);
+   			throw new Exception($errorMsg);
+   		}
+   		
+   		try {
+   			$this->errMgr->error("trying $action");
+   			$this->$action();
+   		} catch (Exception $e) {
+   			$this->errMgr->error("$action threw an error!");
+   			throw $e;
+   		}
+   		
    }
    
    
@@ -137,6 +161,23 @@ abstract class Graviton
    
    
    /**
+    * setPropDefAttribute()
+    * 
+    * Sets a specific attribute of a specific property definition to the passed
+    * in value.
+    * 
+    * @param string $propName - name of the property you want to change an attribute of.
+    * @param string $attributeName - name of the attribute you're changing.
+    * @param mixed $value - the value you want to set the attribute to.
+    */
+   public function setPropDefAttribute($propName, $attributeName, $value)
+   {
+       $this->pdm->setPropDefAttribute($this->name, $propName, $attributeName, $value);
+       $this->propdefs[$propName][$attributeName] = $value;
+   }
+   
+   
+   /**
     * toJSON()
     *
     * Returns a JSON string that represents this module. It will loop through the
@@ -192,7 +233,7 @@ abstract class Graviton
    /**
     * populateFromHash()
     *
-    * Propulates the object based on the contents of a hash or associative array.
+    * Populates the object based on the contents of a hash or associative array.
     * This could be a database resultset row, or a hash assmebled some other way.
     * Will loop through the module's propdefs and search the passed in hash for
     * each property name, and if it finds the name in the hash it assignes this
@@ -208,6 +249,158 @@ abstract class Graviton
                $this->$propName = $hash[$propName];
            }
        }
+   }
+   
+   
+   /**
+    * create()
+    * 
+    * For most classes, create() won't do anything - the application should just
+    * return an empty form for the user to populate. However, for the sake of 
+    * completeness a shell method is defined so the controller has something to
+    * call via execute.
+    * 
+    * @return bool - returns true.
+    */
+   public function create()
+   {
+   		return true;
+   }
+   
+   
+   /**
+    * detail()
+    * 
+    * Populates the module with data from the db (or wherever the module gets its
+    * data from.
+    * 
+    * @param string $idOverride - if you want to force an ID, do it here. Otherwise,
+    * 	defaults to using whatever's in $_REQUEST.
+    * @return mixed - true if successful in querying db for module data, void if exception
+    * 	is thrown.
+    */
+   public function detail($idOverride = '')
+   {
+   		$id = empty($idOverride) ? IsSet($_REQUEST['id']) ? $_REQUEST['id'] : '' : $idOverride;
+   		if (empty($id)) {
+   			throw new Exception("No ID specified for '{$this->name	}'");
+   		}
+   		$this->id = $id;
+   		$searchParams = $this->db->generateSearchParam($this, 'id');
+   		$where = $this->db->generateWhereClause($this, $searchParams);
+   		$sql = "select * from {$this->table} where $where";
+   		$result = $this->db->query($sql);
+   		$data = $this->db->fetchByAssoc($result);
+   		if (empty($data)) {
+   			throw new Exception("There is no {$this->name} with an id of '$id'");
+   		} else {
+   			$this->populateFromHash($data);
+   		}
+   		
+   		return true;
+   }
+   
+   
+   /**
+    * save()
+    *
+    * Basic save function. Will call the DB Manager's generateSQLInsert() or the
+    * generateSQLUpdate method and pass itself and whatever the save data is. Whether
+    * to create or update is based on the presence of a non-empty ID field in the
+    * save data. Save data should always be sent in POST.
+    *
+    * Data validation must be done according to propdef settings. Module-specific 
+    * validation may be performed by extending this method in those classes, as can
+    * any data transformation operations.
+    * 
+    * After the save is done, the db will be queried to get the latest state of the 
+    * data loaded into the module.
+    *
+    * @return bool - true if the save is OK, false otherwise.
+    */
+   public function save()
+   {
+       if (empty($_POST)) {
+           $this->errMgr->error("Not saving {$this->name}, no post data submitted.");
+           return false;
+       }
+
+       $data = $_POST;
+       if (empty($_POST["{$this->name}_id"])) {
+       		// create new record
+       	   $data["{$this->name}_id"] = $this->db->generateDBID();
+           $sql = $this->db->generateSQLInsert($this, $data);
+           $this->id = $data["{$this->name}_id"];
+       } else {
+       		// update existing record
+           $sql = $this->db->generateSQLUpdate($this, $data);
+           $this->id = $data["{$this->name}_id"];
+       }
+
+       if (!$this->validateData($data)) {
+            $this->errMgr->error("Not saving {$this->name}, data failed validation.");
+            return false;
+       }
+        
+       $saveOK = $this->db->query($sql);
+       
+       if ($saveOK) {
+            $this->errMgr->error("Save was OK!");
+       } else {
+           $this->errMgr->error("Save failed!");
+       }
+       
+       $this->detail($this->id);
+       
+       return $saveOK;
+   }
+   
+   
+   /**
+    * validateData()
+    *
+    * Loops through all of the propdefs and tests the data submitted for each one to 
+    * make sure it meets all the requirement and expectations we have for each property.
+    * For every property that has one or more errors, every error is registered for
+    * later display to the user.
+    *
+    * @param hash $data - probably $_POST, the data submitted to update this object.
+    * @return bool - true if all fields pass all validation checks, false if they don't.
+    */
+   public function validateData($data)
+   {
+       $validationOK = true;
+       foreach ($this->propdefs as $propName => $propDef) {
+       	   $fieldName = "{$this->name}_$propName"; 
+           if (!$this->validateRequired($data, $fieldName, $propDef)) {
+               $validationOK = false;
+           }
+       }
+       
+       return $validationOK;
+   }
+   
+   
+   /**
+    * validateRequired()
+    *
+    * Validates this field if the field is required. Required fields cannot be left empty.
+    *
+    * @param hash $data - probably $_POST, the data submitted to update this object.
+    * @param string $fieldName - the name of the field in POST that we're validating.
+    * 	These names are typically "moduleName_propDef['name']"
+    * @param hash $propDef - the definitions for this property.
+    */
+   public function validateRequired($data, $fieldName, $propDef)
+   {
+       $ok = true;
+       if (IsSet($propDef['required']) && $propDef['required'] == true) {
+           if (empty($data[$fieldName])) {
+               $ok = false;
+               $this->errMgr->error("Please fill in the '{$propDef['label']}' field");
+           }
+       }
+       return $ok;
    }
 }
 ?>

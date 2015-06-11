@@ -53,7 +53,7 @@ class TagFactory
         $attributes['maxlength'] = $propdef['len'];
         $attributes['value'] = '{{' . $propdef['name'] . '}}';
         $attributes['id'] = $this->generateID($propdef);
-        
+        $attributes['name'] = $attributes['id'];
         return $this->getTag('input', $attributes);
     }
     
@@ -65,6 +65,7 @@ class TagFactory
         $attributes['maxlength'] = $propdef['len'];
         $attributes['value'] = '';
         $attributes['id'] = $this->generateID($propdef);
+        $attributes['name'] = $attributes['id'];
         
         return $this->getTag('input', $attributes);
     }
@@ -76,6 +77,7 @@ class TagFactory
         $attributes['type'] = 'hidden';
         $attributes['value'] = '{{' . $propdef['name'] . '}}';
         $attributes['id'] = $this->generateID($propdef);
+        $attributes['name'] = $attributes['id'];
         
         return $this->getTag('input', $attributes);
     }
@@ -84,6 +86,7 @@ class TagFactory
     public function select($propdef)
     {
         $attributes = array('id' => $this->generateID($propdef));
+        $attributes['name'] = $attributes['id'];
         if (IsSet($propdef['multiple'])) {
             $attributes['multiple'] = true;
             $attributes['size'] = IsSet($propdef['size']) ? $propdef['size'] : '';
