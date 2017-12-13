@@ -1,0 +1,13 @@
+<table cellspacing="0" cellpadding="0" class="detailView" ng-controller="ModuleDetailController as vc">
+    <tr ng-repeat="field in vc.fields">
+        <td class="label">{{vc.propdefs[field]['label']}}:</td>
+        <td class="value">
+        <ng-include src="'js/angular/shared/templates/fields/' + vc.propdefs[field]['fieldtype'] + '.html'">
+        <td>
+    </tr>
+    <tr>
+        <td colspan="2" align="center">
+            <button id="{{module}}_submit" value="submit" ng-click="save()">Submit</button>
+        </td>
+    </tr>
+</table>

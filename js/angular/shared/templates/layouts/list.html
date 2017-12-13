@@ -1,0 +1,13 @@
+<table cellspacing="0" cellpadding="0" class="listView" ng-controller="ModuleListController as vc">
+    <tr>
+        <th ng-repeat="field in vc.fields" class="label">{{vc.propdefs[field]['label']}}</th>
+    </tr>
+    <tr ng-repeat="record in vc.data">
+        <td ng-repeat="field in vc.fields">
+        
+            <a ng-if="vc.propdefs[field]['link']" href="#{{vc.module}}/{{record['id']}}">{{record[field]}}</a>
+            <span ng-if="!vc.propdefs[field]['link']">{{record[field]}}</span>
+        
+        </td>
+    </tr>
+</table>

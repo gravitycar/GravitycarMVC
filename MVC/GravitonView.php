@@ -1,4 +1,5 @@
 <?php
+namespace Gravitycar\MVC;
 /**
  * GravitonView
  *
@@ -34,13 +35,13 @@ class GravitonView
     The path to our footer file. */
     protected $footerFilePath = 'MVC/templates/footer.php';
     
-    public function __construct(Graviton $module)
+    public function __construct(\Gravitycar\lib\abstracts\Graviton $module)
     {
         $this->module = $module;
-        $this->cfg = ConfigManager::singleton();
-        $this->log = GravitonLogger::singleton();
-        $this->errMgr = ErrorManager::singleton();
-        $this->tf = new TemplateFactory($module);
+        $this->cfg = \Gravitycar\lib\managers\ConfigManager::singleton();
+        $this->log = \Gravitycar\lib\managers\GravitonLogger::singleton();
+        $this->errMgr = \Gravitycar\lib\managers\ErrorManager::singleton();
+        $this->tf = new \Gravitycar\lib\TagFactory\TemplateFactory($module);
     }
     
     
@@ -53,7 +54,7 @@ class GravitonView
     public function render($action)
     {
     	if ($action == 'save') {
-    		header("Location: index.php?module={$this->module->name}&action=detail&id={$this->module->id}");
+    		header("Location: index.php?module={$this->module->moduleName}&action=detail&id={$this->module->id}");
     	} else {
     		print($this->generateHTML());
     	}
@@ -75,7 +76,7 @@ class GravitonView
         $script .= $form->renderTag();
         /*
         foreach ($this->module->propdefs as $propName => $defs) {
-            $field = $wa->getWidget($this->module->name, $defs, '');
+            $field = $wa->getWidget($this->module->moduleName, $defs, '');
             $script .= "{$defs['label']}: $field</br>";
         }
         */
@@ -83,6 +84,23 @@ class GravitonView
         
         $script .= "
         <script type=\"text/javascript\" language=\"JavaScript\">
+        
+        Handlebars.registerHelper('optionSelected', function(field, optionValue) {
+            if (field instanceof Array) {
+                for (index in field) {
+                    var value = field[index];
+                    if (value == optionValue) {
+                        return ' selected ';
+                    }
+                }
+            } else {
+                if (field == optionValue) {
+                    return ' selected ';
+                }
+            }
+            return '';
+        });
+        
         var module_data = {$this->module->toJSON()};
         var module_source = $('#detail_template').html();
         var module_template = Handlebars.compile(module_source);

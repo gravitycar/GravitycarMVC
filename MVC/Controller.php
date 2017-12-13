@@ -1,6 +1,7 @@
 <?php
-require_once('include/lib/autoloader.php');
-require_once('include/lib/fatalErrorHandler.php');
+namespace Gravitycar\MVC;
+require_once('lib/utils/autoloader.php');
+require_once('lib/utils/fatalErrorHandler.php');
 require_once('MVC/Module_Action_View_Map.php');
 class Controller
 {
@@ -21,9 +22,9 @@ class Controller
    public function __construct()
    {
       $this->map = new Module_Action_View_Map();
-      $this->cfg = ConfigManager::singleton();
-      $this->log = GravitonLogger::singleton();
-      $this->errMgr = ErrorManager::singleton();
+      $this->cfg = \Gravitycar\lib\managers\ConfigManager::singleton();
+      $this->log = \Gravitycar\lib\managers\GravitonLogger::singleton();
+      $this->errMgr = \Gravitycar\lib\managers\ErrorManager::singleton();
    }
    
    
@@ -35,7 +36,7 @@ class Controller
       
       try {
       	$module->execute($action);
-      } catch (Exception $e) {
+      } catch (\Exception $e) {
       	$this->errMgr->error($e->getMessage());
       }
       
@@ -67,7 +68,7 @@ class Controller
          $moduleName = $_REQUEST['module'];
       }
       
-      return $moduleName;
+      return "\Gravitycar\modules\\" . $moduleName . "\\" . $moduleName;
    }
    
    

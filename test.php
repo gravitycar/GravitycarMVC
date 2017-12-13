@@ -1,8 +1,14 @@
 <?php
-require_once('include/lib/autoloader.php');
-$db = DBManager::Singleton();
-$db->init(true);
-$result = $db->query("show databases");
-$row = $db->fetchByAssoc($result);
-var_export($row);
+require_once('lib/utils/autoloader.php');
+
+$rel = new ManyToMany('Users_Movies');
+
+$user = new Users();
+$user->detail('99337e50eba2d159');
+
+$rel->loadLinkedGravitons($user);
+
+foreach($rel->linkedRecords as $graviton) {
+    print("{$graviton->title}\n");
+}
 ?>

@@ -24,6 +24,7 @@ $propdefs = array(
         'len' => '64',
         'searchable' => true,
         'tool-tip' => 'Your Login Name',
+        'link' => true,
     ),
     
     'first_name' => array(
@@ -104,5 +105,16 @@ $propdefs = array(
         'tool-tip' => 'Type of user.',
         'options' => array('regular' => 'Regular User', 'admin' => 'Administrative User', 'guest' => 'Guest User'),
     ),
+    
+    'movies' => array(
+        'name' => 'movies',
+        'source' => 'non-db',
+        'datatype' => 'relationship',
+        'relationship' => 'Users_Movies',
+        'multiple' => true,
+        'fieldtype' => 'select2',
+        'label' => 'Movies',
+        'tool-tip' => 'Movie for this users',
+        'options' => array(),
+    ),
 );
-?>

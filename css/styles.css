@@ -24,3 +24,37 @@ body
     text-align: center;
     width: 32%;
 }
+
+
+
+table.detailView, table.listView {
+    padding: 0px;
+    border: 2px solid black;
+}
+
+table.detailView tr td, table.listView tr td {
+    border: 1px solid #999;
+    border-width: 0px 0px 1px 0px;
+    padding: 6px;
+}
+
+table.listView tr th {
+    text-align: center;
+    font-weight: bold;
+    padding: 3px 8px;
+}
+
+table.detailView tr td.label {
+    text-align: right;
+    font-weight: bold;
+}
+
+table.detailView tr td.value {
+    font-weight: normal;
+}
+
+div.largeTextField {
+    width: 300px;
+    height: 250px;
+    overflow: scroll;
+}

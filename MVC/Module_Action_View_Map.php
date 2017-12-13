@@ -1,4 +1,5 @@
 <?php
+namespace Gravitycar\MVC;
 /**
  * Module_Action_View_Map class
  * This class stores our map of which modules are valid, and what actions they
@@ -18,6 +19,11 @@ class Module_Action_View_Map
       $this->addModuleToMap("Users", "update", "detail");
       $this->addModuleToMap("Users", "create", "detail");
       $this->addModuleToMap("Users", "detail", "detail");
+      $this->addModuleToMap("Movies", "display", "list");
+      $this->addModuleToMap("Movies", "save", "detail");
+      $this->addModuleToMap("Movies", "update", "detail");
+      $this->addModuleToMap("Movies", "create", "detail");
+      $this->addModuleToMap("Movies", "detail", "detail");
    }
    
    /**

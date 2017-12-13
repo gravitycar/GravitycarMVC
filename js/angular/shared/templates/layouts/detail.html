@@ -1,0 +1,14 @@
+This is the detail view.
+
+<p>{{message}}</p>
+
+<table cellspacing="0" cellpadding="0" class="detailView" ng-controller="ModuleDetailController">
+    <tr ng-repeat="field in fields">
+        <td class="label">{{propdefs[field]['label']}}:</td>
+        <td class="value">
+        <a ng-if="$first" href="rest/{{module}}/{{data['id']}}" + >{{data[field]}}</a>
+        <span ng-if="!$first">{{data[field]}}</span>  
+        
+        ({{propdefs[field]['fieldtype']}})<td>
+    </tr>
+</table>

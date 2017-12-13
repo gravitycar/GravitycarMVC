@@ -1,0 +1,244 @@
+
+2017-11-22 10:02:01[: ] - Running DatabaseBuilder
+
+2017-11-22 10:02:01[: ] - Creating database 'gravitycarmvc'
+
+2017-11-22 10:02:01[: ] - This query failed!
+CREATE DATABASE gravitycarmvc
+
+2017-11-22 10:02:01[: ] - Can't create database 'gravitycarmvc'; database exists
+
+2017-11-22 10:02:01[: ] - Could not create database 'gravitycarmvc'.
+Create database Error (0) 
+
+2017-11-22 10:02:01[: ] - Checking db tables for 'Home'.
+
+2017-11-22 10:02:01[: ] - Checking db tables for 'Users'.
+
+2017-11-22 10:02:01[: ] - Checking db tables for 'Movies'.
+
+2017-11-22 10:02:01[: ] - \Gravitycar\lib\abstracts\RestAPI is not instantiable.
+
+2017-11-22 10:02:01[: ] - /home/pi/GravitycarMVC/lib/restApi/GravitonAPI.php defines \Gravitycar\lib\restApi\GravitonAPI which extends RestAPI, looks like an API class!
+
+2017-11-22 10:02:01[: ] - /home/pi/GravitycarMVC/cache does not exist
+
+2017-11-23 11:35:24[: ] - Running DatabaseBuilder
+
+2017-11-23 11:35:25[: ] - Creating database 'gravitycarmvc'
+
+2017-11-23 11:35:25[: ] - This query failed!
+CREATE DATABASE gravitycarmvc
+
+2017-11-23 11:35:25[: ] - Can't create database 'gravitycarmvc'; database exists
+
+2017-11-23 11:35:25[: ] - Could not create database 'gravitycarmvc'.
+Create database Error (0) 
+
+2017-11-23 11:35:25[: ] - Checking db tables for 'Home'.
+
+2017-11-23 11:35:25[: ] - Checking db tables for 'Users'.
+
+2017-11-23 11:35:25[: ] - Checking db tables for 'Movies'.
+
+2017-11-23 11:35:25[: ] - \Gravitycar\lib\abstracts\RestAPI is not instantiable.
+
+2017-11-23 11:35:25[: ] - /home/pi/GravitycarMVC/lib/restApi/GravitonAPI.php defines \Gravitycar\lib\restApi\GravitonAPI which extends RestAPI, looks like an API class!
+
+2017-11-23 11:38:38[: ] - Running DatabaseBuilder
+
+2017-11-23 11:38:38[: ] - Creating database 'gravitycarmvc'
+
+2017-11-23 11:38:38[: ] - This query failed!
+CREATE DATABASE gravitycarmvc
+
+2017-11-23 11:38:38[: ] - Can't create database 'gravitycarmvc'; database exists
+
+2017-11-23 11:38:38[: ] - Could not create database 'gravitycarmvc'.
+Create database Error (0) 
+
+2017-11-23 11:38:38[: ] - Checking db tables for 'Home'.
+
+2017-11-23 11:38:38[: ] - Checking db tables for 'Users'.
+
+2017-11-23 11:38:38[: ] - Checking db tables for 'Movies'.
+
+2017-11-23 11:38:38[: ] - \Gravitycar\lib\abstracts\RestAPI is not instantiable.
+
+2017-11-23 11:38:38[: ] - /home/pi/GravitycarMVC/lib/restApi/GravitonAPI.php defines \Gravitycar\lib\restApi\GravitonAPI which extends RestAPI, looks like an API class!
+
+2017-11-23 12:08:22[: ] - Running DatabaseBuilder
+
+2017-11-23 12:08:22[: ] - Creating database 'gravitycarmvc'
+
+2017-11-23 12:08:22[: ] - This query failed!
+CREATE DATABASE gravitycarmvc
+
+2017-11-23 12:08:22[: ] - Can't create database 'gravitycarmvc'; database exists
+
+2017-11-23 12:08:22[: ] - Could not create database 'gravitycarmvc'.
+Create database Error (0) 
+
+2017-11-23 12:08:22[: ] - Checking db tables for 'Home'.
+
+2017-11-23 12:08:22[: ] - Checking db tables for 'Users'.
+
+2017-11-23 12:08:22[: ] - Checking db tables for 'Movies'.
+
+2017-11-23 12:08:22[: ] - \Gravitycar\lib\abstracts\RestAPI is not instantiable.
+
+2017-11-23 12:08:22[: ] - /home/pi/GravitycarMVC/lib/restApi/GravitonAPI.php defines \Gravitycar\lib\restApi\GravitonAPI which extends RestAPI, looks like an API class!
+
+2017-11-23 13:06:49[: ] - Running DatabaseBuilder
+
+2017-11-23 13:06:49[: ] - Creating database 'gravitycarmvc'
+
+2017-11-23 13:06:49[: ] - This query failed!
+CREATE DATABASE gravitycarmvc
+
+2017-11-23 13:06:49[: ] - Can't create database 'gravitycarmvc'; database exists
+
+2017-11-23 13:06:49[: ] - Could not create database 'gravitycarmvc'.
+Create database Error (0) 
+
+2017-11-23 13:06:49[: ] - Checking db tables for 'Home'.
+
+2017-11-23 13:06:49[: ] - Checking db tables for 'Users'.
+
+2017-11-23 13:06:49[: ] - Checking db tables for 'Movies'.
+
+2017-11-23 13:06:49[: ] - \Gravitycar\lib\abstracts\RestAPI is not instantiable.
+
+2017-11-23 13:06:49[: ] - /home/pi/GravitycarMVC/lib/restApi/GravitonAPI.php defines \Gravitycar\lib\restApi\GravitonAPI which extends RestAPI, looks like an API class!
+
+2017-11-23 13:07:10[: ] - Running DatabaseBuilder
+
+2017-11-23 13:07:10[: ] - Creating database 'gravitycarmvc'
+
+2017-11-23 13:07:10[: ] - This query failed!
+CREATE DATABASE gravitycarmvc
+
+2017-11-23 13:07:10[: ] - Can't create database 'gravitycarmvc'; database exists
+
+2017-11-23 13:07:10[: ] - Could not create database 'gravitycarmvc'.
+Create database Error (0) 
+
+2017-11-23 13:07:10[: ] - Checking db tables for 'Home'.
+
+2017-11-23 13:07:10[: ] - Checking db tables for 'Users'.
+
+2017-11-23 13:07:10[: ] - Checking db tables for 'Movies'.
+
+2017-11-23 13:07:10[: ] - \Gravitycar\lib\abstracts\RestAPI is not instantiable.
+
+2017-11-23 13:07:10[: ] - /home/pi/GravitycarMVC/lib/restApi/GravitonAPI.php defines \Gravitycar\lib\restApi\GravitonAPI which extends RestAPI, looks like an API class!
+
+2017-11-23 13:08:40[: ] - Running DatabaseBuilder
+
+2017-11-23 13:08:40[: ] - Creating database 'gravitycarmvc'
+
+2017-11-23 13:08:40[: ] - This query failed!
+CREATE DATABASE gravitycarmvc
+
+2017-11-23 13:08:40[: ] - Can't create database 'gravitycarmvc'; database exists
+
+2017-11-23 13:08:40[: ] - Could not create database 'gravitycarmvc'.
+Create database Error (0) 
+
+2017-11-23 13:08:40[: ] - Checking db tables for 'Home'.
+
+2017-11-23 13:08:40[: ] - Checking db tables for 'Users'.
+
+2017-11-23 13:08:40[: ] - Checking db tables for 'Movies'.
+
+2017-11-23 13:08:40[: ] - \Gravitycar\lib\abstracts\RestAPI is not instantiable.
+
+2017-11-23 13:08:40[: ] - /home/pi/GravitycarMVC/lib/restApi/GravitonAPI.php defines \Gravitycar\lib\restApi\GravitonAPI which extends RestAPI, looks like an API class!
+
+2017-11-23 13:09:25[: ] - Running DatabaseBuilder
+
+2017-11-23 13:09:25[: ] - Creating database 'gravitycarmvc'
+
+2017-11-23 13:09:25[: ] - This query failed!
+CREATE DATABASE gravitycarmvc
+
+2017-11-23 13:09:25[: ] - Can't create database 'gravitycarmvc'; database exists
+
+2017-11-23 13:09:25[: ] - Could not create database 'gravitycarmvc'.
+Create database Error (0) 
+
+2017-11-23 13:09:25[: ] - Checking db tables for 'Home'.
+
+2017-11-23 13:09:25[: ] - Checking db tables for 'Users'.
+
+2017-11-23 13:09:25[: ] - Checking db tables for 'Movies'.
+
+2017-11-23 13:09:25[: ] - \Gravitycar\lib\abstracts\RestAPI is not instantiable.
+
+2017-11-23 13:09:25[: ] - /home/pi/GravitycarMVC/lib/restApi/GravitonAPI.php defines \Gravitycar\lib\restApi\GravitonAPI which extends RestAPI, looks like an API class!
+
+2017-11-23 13:13:36[: ] - Running DatabaseBuilder
+
+2017-11-23 13:13:36[: ] - Creating database 'gravitycarmvc'
+
+2017-11-23 13:13:36[: ] - This query failed!
+CREATE DATABASE gravitycarmvc
+
+2017-11-23 13:13:36[: ] - Can't create database 'gravitycarmvc'; database exists
+
+2017-11-23 13:13:36[: ] - Could not create database 'gravitycarmvc'.
+Create database Error (0) 
+
+2017-11-23 13:13:36[: ] - Checking db tables for 'Home'.
+
+2017-11-23 13:13:36[: ] - Checking db tables for 'Users'.
+
+2017-11-23 13:13:36[: ] - Checking db tables for 'Movies'.
+
+2017-11-23 13:13:36[: ] - \Gravitycar\lib\abstracts\RestAPI is not instantiable.
+
+2017-11-23 13:13:36[: ] - /home/pi/GravitycarMVC/lib/restApi/GravitonAPI.php defines \Gravitycar\lib\restApi\GravitonAPI which extends RestAPI, looks like an API class!
+
+2017-11-23 13:14:32[: ] - Running DatabaseBuilder
+
+2017-11-23 13:14:32[: ] - Creating database 'gravitycarmvc'
+
+2017-11-23 13:14:32[: ] - This query failed!
+CREATE DATABASE gravitycarmvc
+
+2017-11-23 13:14:32[: ] - Can't create database 'gravitycarmvc'; database exists
+
+2017-11-23 13:14:32[: ] - Could not create database 'gravitycarmvc'.
+Create database Error (0) 
+
+2017-11-23 13:14:32[: ] - Checking db tables for 'Home'.
+
+2017-11-23 13:14:32[: ] - Checking db tables for 'Users'.
+
+2017-11-23 13:14:32[: ] - Checking db tables for 'Movies'.
+
+2017-11-23 13:14:32[: ] - \Gravitycar\lib\abstracts\RestAPI is not instantiable.
+
+2017-11-23 13:14:32[: ] - /home/pi/GravitycarMVC/lib/restApi/GravitonAPI.php defines \Gravitycar\lib\restApi\GravitonAPI which extends RestAPI, looks like an API class!
+
+2017-11-23 13:14:50[: ] - Running DatabaseBuilder
+
+2017-11-23 13:14:50[: ] - Creating database 'gravitycarmvc'
+
+2017-11-23 13:14:50[: ] - This query failed!
+CREATE DATABASE gravitycarmvc
+
+2017-11-23 13:14:50[: ] - Can't create database 'gravitycarmvc'; database exists
+
+2017-11-23 13:14:50[: ] - Could not create database 'gravitycarmvc'.
+Create database Error (0) 
+
+2017-11-23 13:14:50[: ] - Checking db tables for 'Home'.
+
+2017-11-23 13:14:50[: ] - Checking db tables for 'Users'.
+
+2017-11-23 13:14:50[: ] - Checking db tables for 'Movies'.
+
+2017-11-23 13:14:50[: ] - \Gravitycar\lib\abstracts\RestAPI is not instantiable.
+
+2017-11-23 13:14:50[: ] - /home/pi/GravitycarMVC/lib/restApi/GravitonAPI.php defines \Gravitycar\lib\restApi\GravitonAPI which extends RestAPI, looks like an API class!

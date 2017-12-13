@@ -4,8 +4,8 @@
     <property file="build/build.properties" />
 
     <property name="package"  value="${phing.project.name}" override="true" />
-    <property name="builddir" value="/var/www.8020" override="true" />
-    <property name="srcdir"   value="/home/mike/GravitycarMVC" override="true" />
+    <property name="builddir" value="/var/www/GravitycarMVC" override="true" />
+    <property name="srcdir"   value="/home/pi/GravitycarMVC" override="true" />
     <property name="docsdir" value="${builddir}/docs" override="true"/>
 
     <!-- Fileset for all files -->
@@ -62,7 +62,7 @@
     <!-- ============================================  -->
     <target name="update_config" description="only update config file.">
       <echo msg="Updating config file..."/>
-      <copy file="${srcdir}/../gravitycar.config.php" tofile="${builddir}/../gravitycar.config.php" overwrite="true"/>
+      <copy file="${srcdir}/gravitycar.config.php" tofile="${builddir}/gravitycar.config.php" overwrite="true"/>
     </target>
     
     

@@ -1,0 +1,3 @@
+<select name="{{field}}[]" id="{{field}}" multiple>
+    <option ng-repeat="(key, value) in vc.data[field]" value="{{key}}" ng-selected="vc.data[field][key]">{{value}}</option>
+</select>

@@ -1,5 +1,6 @@
 <?php
-class Home extends Graviton
+namespace Gravitycar\modules\Home;
+class Home extends \Gravitycar\lib\abstracts\Graviton
 {
    public $name = "Home";
    

@@ -1,0 +1,4 @@
+<select name="{{field}}[]" id="{{field}}">
+    <option ng-repeat="(key, value) in vc.propdefs[field].options" value="{{key}}" 
+            ng-selected="vc.data[field] == key">{{value}}</option>
+</select>
